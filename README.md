@@ -75,9 +75,66 @@ Details: http://woocommerce.github.io/woocommerce-rest-api-docs/
 7. save the info as Json
 
 ```python
+json_data_location = 'data/orders.json'
+
 orders_data = orders.json()
-with open('orders.json', 'w') as f:
+with open(json_data_location, 'w') as f:
     json.dump(orders_data, f)
 ```
 
-8. transform the Json data for the revenue reporting with pandas
+8. transform the Json data with pandas
+
+```bash
+pip install pip install pandas
+```
+
+9. create data_prep.py
+
+```python
+import pandas as pd 
+
+class Processer():
+    def preparation(self, json_data):
+        df_orders = pd.read_json (json_data)
+        num_orders = df_orders.shape[0]
+        data = []
+
+        for i in range(0, num_orders):
+            products = df_orders.iloc[i].line_items
+
+            for p in products:
+                order_id = df_orders.iloc[i].id
+                date = df_orders.iloc[i].date_created
+                payment = df_orders.iloc[i].payment_method
+                sku = p.get('sku')
+                
+                if(p.get('parent_name')):
+                    name = p.get('parent_name')
+                    variant = p.get('meta_data')[0].get('value')
+
+                else:
+                    name = p.get('name')
+                    variant = ""
+
+                price = p.get('price')
+                quantity = p.get('quantity')
+                
+                d = {'order_id': order_id, 'date': date, 'payment':payment, 'sku':sku, 'product name':name, 'variant':variant, 'price': price, 'quantity':quantity}
+                data.append(d)
+        
+        df_result = pd.DataFrame(data, columns = ['date', 'payment','sku', 'product name','variant','price', 'quantity'])
+        df_result.to_csv('data/result.csv', encoding='utf-8')
+```
+
+10. import this data_prep in the app.py and use the Processer
+
+```python
+from data_prep import Processer
+
+....
+
+processer =  Processer()
+processer.preparation(json_data_location)
+```
+
+
