@@ -1,4 +1,4 @@
-#WooCommerce API Revenue Dashboard
+# WooCommerce API Revenue Dashboard
 
 ## Goal
 For my online store I create a revenue reporting manually every month. I started with this project in order to save my time and to test my python API skills.
