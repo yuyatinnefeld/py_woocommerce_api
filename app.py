@@ -2,12 +2,6 @@ from conf import WooCommerce
 from woocommerce import API
 import json
 
-#WooCommerce REST API SETUP
-#https://docs.woocommerce.com/document/woocommerce-rest-api/
-
-#WooCommerce REST API INFO
-#URL: https://woocommerce.github.io/woocommerce-rest-api-docs/?python#create-an-order-note
-
 wc = WooCommerce()
 key = wc.get_key()
 secret = wc.get_secret()

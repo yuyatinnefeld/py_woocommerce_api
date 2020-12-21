@@ -80,4 +80,4 @@ with open('orders.json', 'w') as f:
     json.dump(orders_data, f)
 ```
 
-8. transform the Json data for the revenue reporting
+8. transform the Json data for the revenue reporting with pandas
