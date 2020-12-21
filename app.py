@@ -1,43 +1,27 @@
 from conf import WooCommerce
 from woocommerce import API
 import json
+from data_prep import Processer
 
 wc = WooCommerce()
 key = wc.get_key()
 secret = wc.get_secret()
 
 
-wcapi = API(
-    url='http://wanamour.de/',
-    consumer_key = key,
-    consumer_secret = secret,
-    version="wc/v3"
-)
+#wcapi = API(
+#    url='http://wanamour.de/',
+#    consumer_key = key,
+#    consumer_secret = secret,
+#    version="wc/v3"
+#)
 
-#print("### TEST START ###")
-#r = wcapi.get("products")
-#print(r)
-#print(r.status_code)
-#print(r.headers['content-type'])
-#print(r.encoding)
-#print(r.text)
-#print(r.json())
-#print("### TEST END ###")
+json_data_location = 'data/orders.json'
 
-orders = wcapi.get("orders")
-orders_data = orders.json()
-with open('orders.json', 'w') as f:
-    json.dump(orders_data, f)
+#orders = wcapi.get("orders")
+#orders_data = orders.json()
+#with open(json_data_location, 'w') as f:
+#    json.dump(orders_data, f)
 
-
-#customers = wcapi.get("customers")
-#customers_data = customers.json()
-#with open('customers.json', 'w') as f:
-#    json.dump(customers_data, f)
-
-
-#products = wcapi.get("products")
-#product_data = products.json()
-#with open('result.json', 'w') as f:
- #   json.dump(product_data, f)
+processer =  Processer()
+processer.preparation(json_data_location)
 
