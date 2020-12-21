@@ -69,6 +69,7 @@ orders = wcapi.get("orders")
 ```
 
 you can get other info for your own business needs
+
 Details: http://woocommerce.github.io/woocommerce-rest-api-docs/
 
 7. save the info as Json
@@ -78,3 +79,5 @@ orders_data = orders.json()
 with open('orders.json', 'w') as f:
     json.dump(orders_data, f)
 ```
+
+8. transform the Json data for the revenue reporting
