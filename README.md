@@ -28,13 +28,21 @@ pip install pip install woocommerce
 https://docs.woocommerce.com/document/woocommerce-rest-api/
 
 
-### 3. paste these info in the conf.py
+### 3. create the conf.py and paste these the key and secret
 
 ```python
 class WooCommerce():
   def __init__(self):
     self.cunsumer_key = 'ck_xxxxxxxxx'
     self.consumer_secret = 'cs_xxxxxxxxxx'
+    
+ 
+  def get_key(self):
+    return self.cunsumer_key
+
+  def get_secret(self):
+    return self.consumer_secret
+
 
 ```
 
