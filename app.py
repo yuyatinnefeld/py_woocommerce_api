@@ -1,27 +1,13 @@
-from conf import WooCommerce
-from woocommerce import API
-import json
-from data_prep import Processer
+from wcapi import WCAPI
+from orders_prep import OrdersProcesser
 
-wc = WooCommerce()
-key = wc.get_key()
-secret = wc.get_secret()
+orders_source_path, query, orders_result_path = 'data/orders.json', 'orders', 'data/orders.csv'
 
+wcapi = WCAPI()
+configuration = wcapi.setup()
+wcapi.extract_to_json(query, configuration, orders_source_path)
 
-#wcapi = API(
-#    url='http://wanamour.de/',
-#    consumer_key = key,
-#    consumer_secret = secret,
-#    version="wc/v3"
-#)
-
-json_data_location = 'data/orders.json'
-
-#orders = wcapi.get("orders")
-#orders_data = orders.json()
-#with open(json_data_location, 'w') as f:
-#    json.dump(orders_data, f)
-
-processer =  Processer()
-processer.preparation(json_data_location)
-
+orders_processer =  OrdersProcesser()
+df = orders_processer.read(orders_source_path)
+clean_orders_data = orders_processer.clean(df)
+orders_processer.export(clean_orders_data, orders_result_path)
