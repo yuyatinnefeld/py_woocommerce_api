@@ -12,23 +12,23 @@ https://woocommerce.github.io/woocommerce-rest-api-docs/?python#create-an-order-
 
 ## Setup
 
-0. activate venv
+### 0. activate venv
 ```bash
 python -m venv env
 source env/bin/activate (Mac) or env\Scripts\activate (Windows)
 ```
 
-1. install the package
+### 1. install the package
 ```bash
 pip install pip install woocommerce
 ```
 
-2. create the WooCommerce API and copy the consumer key and secret ID.
+### 2. create the WooCommerce API and copy the consumer key and secret ID.
 
 https://docs.woocommerce.com/document/woocommerce-rest-api/
 
 
-3. paste these info in the conf.py
+### 3. paste these info in the conf.py
 
 ```python
 class WooCommerce():
@@ -38,7 +38,7 @@ class WooCommerce():
 
 ```
 
-4. create the wcapi.py for extraction & saving the WooCommerce data
+### 4. create the wcapi.py for extraction & saving the WooCommerce data
 
 ```python
 from conf import WooCommerce
@@ -74,7 +74,7 @@ class WCAPI():
 ```
 
 
-5. create the orders_prep.py to clean & export the orders.json data 
+### 5. create the orders_prep.py to clean & export the orders.json data 
 
 ```python
 import pandas as pd 
@@ -133,7 +133,7 @@ you can extract other query category (Customers, Products, Report, etc.) for you
 
 Details: http://woocommerce.github.io/woocommerce-rest-api-docs/
 
-7. create the app.py and use wcapi.py and orders_prep.py there
+### 6. create the app.py and use wcapi.py and orders_prep.py there
 
 ```python
 from wcapi import WCAPI
@@ -151,7 +151,7 @@ clean_orders_data = orders_processer.clean(df)
 orders_processer.export(clean_orders_data, orders_result_path)
 ```
 
-8. run the app.py and the WooCommerce data is extracted and save in the data folder.
+### 7. run the app.py and the WooCommerce data is extracted and save in the data folder.
 
 ```bash
 python app.py
