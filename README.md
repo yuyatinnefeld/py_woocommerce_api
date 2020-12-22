@@ -23,7 +23,7 @@ source env/bin/activate (Mac) or env\Scripts\activate (Windows)
 pip install pip install woocommerce
 ```
 
-2. create WooCommerce API and copy the consumer key and secret ID.
+2. create the WooCommerce API and copy the consumer key and secret ID.
 
 https://docs.woocommerce.com/document/woocommerce-rest-api/
 
@@ -38,103 +38,136 @@ class WooCommerce():
 
 ```
 
-4. import package in the app.py 
+4. create the wcapi.py for extraction & saving the WooCommerce data
 
 ```python
 from conf import WooCommerce
 from woocommerce import API
 import json
+
+class WCAPI():
+
+    def setup(self):
+        wc = WooCommerce()
+        key = wc.get_key()
+        secret = wc.get_secret()
+
+        wcapi = API(
+            url='http://wanamour.de/',
+            consumer_key = key,
+            consumer_secret = secret,
+            version="wc/v3"
+        )
+        print("🐍 setup done 🐍")
+        return wcapi
+
+
+    def extract_to_json(self, query, wcapi, data_path):
+        data = wcapi.get(query)
+        json_data = data.json()
+    
+        with open(data_path, 'w') as f:
+            json.dump(json_data, f)
+        
+        print("🐍 data extracted 🐍")
+
 ```
 
 
-5. setup the WC API
-```python
-wc = WooCommerce()
-key = wc.get_key()
-secret = wc.get_secret()
-
-
-wcapi = API(
-    url='http://wanamour.de/',
-    consumer_key = key,
-    consumer_secret = secret,
-    version="wc/v3"
-)
-```
-
-6. get the orders info
-
-```python
-orders = wcapi.get("orders")
-```
-
-you can get other info for your own business needs
-
-Details: http://woocommerce.github.io/woocommerce-rest-api-docs/
-
-7. save the info as Json
-
-```python
-json_data_location = 'data/orders.json'
-
-orders_data = orders.json()
-with open(json_data_location, 'w') as f:
-    json.dump(orders_data, f)
-```
-
-8. transform the Json data with pandas
-
-```bash
-pip install pip install pandas
-```
-
-9. create data_prep.py
+5. create the orders_prep.py to clean & export the orders.json data 
 
 ```python
 import pandas as pd 
 
-class Processer():
-    def preparation(self, json_data):
-        df_orders = pd.read_json (json_data)
-        num_orders = df_orders.shape[0]
-        data = []
+class OrdersProcesser():
 
-        for i in range(0, num_orders):
-            products = df_orders.iloc[i].line_items
+    def read(self, data_path):
+        df = pd.read_json(data_path)
+        print("🐍 json data loaded 🐍")
+        return df
 
-            for p in products:
-                order_id = df_orders.iloc[i].id
-                date = df_orders.iloc[i].date_created
-                payment = df_orders.iloc[i].payment_method
-                sku = p.get('sku')
+    def clean(self, df):
+
+        def create_order_list(order_idx, product):
+            
+            current_order = df.iloc[order_idx]
+            
+            order_id = current_order.id
+            date = current_order.date_created
+            payment = current_order.payment_method
+            
+            has_variant = True if product.get('parent_name') else False
                 
-                if(p.get('parent_name')):
-                    name = p.get('parent_name')
-                    variant = p.get('meta_data')[0].get('value')
-
-                else:
-                    name = p.get('name')
-                    variant = ""
-
-                price = p.get('price')
-                quantity = p.get('quantity')
+            name = product.get('parent_name') if has_variant else product.get('name')
+            variant = product.get('meta_data')[0].get('value') if has_variant else ""
+            sku = product.get('sku')
+            price = product.get('price')
+            quantity = product.get('quantity')
                 
-                d = {'order_id': order_id, 'date': date, 'payment':payment, 'sku':sku, 'product name':name, 'variant':variant, 'price': price, 'quantity':quantity}
-                data.append(d)
+            d = {'order_id': order_id, 'date': date, 'payment':payment, 'sku':sku, 
+                'product name':name, 'variant':variant, 'price': price, 'quantity':quantity}
+            
+            order_list.append(d)
+            print("🐍  single order in the order list added 🐍")
+
+        order_list, total_orders = [], df.shape[0]
+
+        for order_idx in range(0, total_orders):
+            products = df.iloc[order_idx].line_items
+            
+            [
+                create_order_list(order_idx, product) 
+                for product in products
+            ]
         
-        df_result = pd.DataFrame(data, columns = ['date', 'payment','sku', 'product name','variant','price', 'quantity'])
-        df_result.to_csv('data/result.csv', encoding='utf-8')
+        print("🐍 order list created 🐍")
+        return order_list
+
+    def export(self, data, result_data_path):
+        df = pd.DataFrame(data, columns = ['date', 'payment','sku', 'product name','variant','price', 'quantity'])
+        df.to_csv(result_data_path, encoding='utf-8')
+        print("🐍  result as csv saved  🐍")
 ```
 
-10. import this data_prep in the app.py and use the Processer
+you can extract other query category (Customers, Products, Report, etc.) for your own business needs
+
+Details: http://woocommerce.github.io/woocommerce-rest-api-docs/
+
+7. create the app.py and use wcapi.py and orders_prep.py there
 
 ```python
-from data_prep import Processer
+from wcapi import WCAPI
+from orders_prep import OrdersProcesser
 
-....
+orders_source_path, query, orders_result_path = 'data/orders.json', 'orders', 'data/orders.csv'
 
-processer =  Processer()
-processer.preparation(json_data_location)
+wcapi = WCAPI()
+configuration = wcapi.setup()
+wcapi.extract_to_json(query, configuration, orders_source_path)
+
+orders_processer =  OrdersProcesser()
+df = orders_processer.read(orders_source_path)
+clean_orders_data = orders_processer.clean(df)
+orders_processer.export(clean_orders_data, orders_result_path)
 ```
 
+8. run the app.py and the WooCommerce data is extracted and save in the data folder.
 
+```bash
+python app.py
+```
+
+data was successfully processed if you see these messages
+
+```bash
+🐍 setup done 🐍
+🐍 data extracted 🐍
+🐍 json data loaded 🐍
+🐍  single order in the order list added 🐍
+
+...
+
+🐍  single order in the order list added 🐍
+🐍 order list exported 🐍
+🐍  result as csv saved  🐍
+```
