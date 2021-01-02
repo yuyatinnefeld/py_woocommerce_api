@@ -1,4 +1,4 @@
-from conf import WooCommerce
+from wc_conf import WooCommerce
 from woocommerce import API
 import json
 
