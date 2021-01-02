@@ -1,3 +1,7 @@
+# main.py
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from wcapi import WCAPI
 from orders_prep import OrdersProcesser
 
