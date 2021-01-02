@@ -1,6 +1,13 @@
-# main.py
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+""" 
+---------------------------------------------
+# Google Search Console Python API
+# (C) 2021 Yuya Tinnefeld, Düsseldorf, Germany
+# email: yuyatinnefeld@gmail.com
+---------------------------------------------
+"""
 
 from wcapi import WCAPI
 from orders_prep import OrdersProcesser
