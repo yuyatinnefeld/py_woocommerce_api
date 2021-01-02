@@ -10,11 +10,12 @@ class WCAPI():
         secret = wc.get_secret()
 
         wcapi = API(
-            url='http://wanamour.de/',
+            url='http://YOUR-WEBSITE/',
             consumer_key = key,
             consumer_secret = secret,
             version="wc/v3"
         )
+
         print("🐍 api setup done 🐍")
         return wcapi
 
