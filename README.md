@@ -28,7 +28,7 @@ pip install pip install woocommerce
 https://docs.woocommerce.com/document/woocommerce-rest-api/
 
 
-### 3. create the conf.py and paste these the key and secret
+### 3. create the wc_conf.py and paste these the key and secret
 
 ```python
 class WooCommerce():
@@ -49,7 +49,7 @@ class WooCommerce():
 ### 4. create the wcapi.py for extraction & saving the WooCommerce data
 
 ```python
-from conf import WooCommerce
+from wc_conf import WooCommerce
 from woocommerce import API
 import json
 
