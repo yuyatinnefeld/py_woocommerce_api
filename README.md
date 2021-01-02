@@ -159,10 +159,10 @@ clean_orders_data = orders_processer.clean(df)
 orders_processer.export(clean_orders_data, orders_result_path)
 ```
 
-### 7. run the app.py and the WooCommerce data is extracted and save in the data folder.
+### 7. run the main.py and the WooCommerce data is extracted and save in the data folder.
 
 ```bash
-python app.py
+python main.py
 ```
 
 data was successfully processed if you see these messages
