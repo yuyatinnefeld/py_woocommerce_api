@@ -3,7 +3,7 @@
 
 """ 
 ---------------------------------------------
-# Google Search Console Python API
+# WooCommerce Python API
 # (C) 2021 Yuya Tinnefeld, Düsseldorf, Germany
 # email: yuyatinnefeld@gmail.com
 ---------------------------------------------
