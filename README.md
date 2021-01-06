@@ -1,7 +1,17 @@
-# WooCommerce API Revenue Dashboard
+<h1 align="center">WooCommerce Python API</h1> <br>
+<h2 align="center">🚀 🐍 🚀 🐍 🚀 🐍 🚀 🐍 🚀 🐍 🚀 🐍 </h2> <br>
 
-## Goal
-For my online store I create a revenue reporting manually every month. I started with this project in order to save my time and to test my python API skills.
+## Table of Contents
+
+- [About](#about)
+- [Benefit](#benefit)
+- [Info](#info)
+- [Demo](#demo)
+- [Setup](#setup)
+## About
+WooCommerce is an open-source e-commerce plugin for WordPress. It is designed for small to large-sized online merchants using WordPress.(Wikipedia)
+## Benefit
+For the creating of revenue reports manually every month takes so much time. Though the woocommerce API you can save your time and receive the automatically updated revenue reports.
 
 ## Info
 WooCommerce REST API SETUP:
@@ -11,7 +21,6 @@ WooCommerce REST API INFO:
 https://woocommerce.github.io/woocommerce-rest-api-docs/?python#create-an-order-note
 
 ## Setup
-
 ### 0. activate venv
 ```bash
 python -m venv env
