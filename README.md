@@ -11,7 +11,7 @@
 ## About
 WooCommerce is an open-source e-commerce plugin for WordPress. It is designed for small to large-sized online merchants using WordPress.(Wikipedia)
 ## Benefit
-For the creating of revenue reports manually every month takes so much time. Though the woocommerce API you can save your time and receive the automatically updated revenue reports.
+For the manual creation of revenue reports every month a lot of time is wasted. Through the woocommerce API you can save your time and receive automatically updated revenue reports.
 
 ## Info
 WooCommerce REST API SETUP:
@@ -55,7 +55,7 @@ class WooCommerce():
 
 ```
 
-### 4. create the wcapi.py for extraction & saving the WooCommerce data
+### 4. create the wcapi.py for the extraction & saving the WooCommerce data
 
 ```python
 from wc_conf import WooCommerce
