@@ -1,14 +1,12 @@
 <h1 align="center">WooCommerce Python API</h1> <br>
-<h2 align="center">🚀 🐍 🚀 🐍 🚀 🐍 🚀 🐍 🚀 🐍 🚀 🐍 </h2> <br>
-
-## Table of Contents
-
+<h2>🐍 Table of Contents 🐍</h2>
 - [About](#about)
 - [Benefit](#benefit)
 - [Info](#info)
 - [Demo](#demo)
 - [Setup](#setup)
-## About
+
+<h2>⚡ About⚡ </h2>
 WooCommerce is an open-source e-commerce plugin for WordPress. It is designed for small to large-sized online merchants using WordPress.(Wikipedia)
 ## Benefit
 For the manual creation of revenue reports every month a lot of time is wasted. Through the woocommerce API you can save your time and receive automatically updated revenue reports.
